@@ -8,8 +8,12 @@ import java.util.List;
 /**
  * Created by Lidchanin on 01.10.2016.
  */
-public class ContactSimpleDAO implements ContactDAO {
-    private final List<Contact> contacts = new ArrayList<Contact>();
+public final class ContactSimpleDAO implements ContactDAO
+{
+    private final List<Contact> contacts = new ArrayList<>();
+
+    public ContactSimpleDAO() {
+    }
 
     @Override
     public Long addContact(Contact contact) {
@@ -18,6 +22,7 @@ public class ContactSimpleDAO implements ContactDAO {
         contacts.add(contact);
         return id;
     }
+
     @Override
     public void updateContact(Contact contact) {
         Contact oldContact = getContact(contact.getContactId());
@@ -28,6 +33,7 @@ public class ContactSimpleDAO implements ContactDAO {
             oldContact.setEmail(contact.getEmail());
         }
     }
+
     @Override
     public void deleteContact(Long contactId) {
         for(Iterator<Contact> it = contacts.iterator(); it.hasNext();) {
@@ -37,6 +43,7 @@ public class ContactSimpleDAO implements ContactDAO {
             }
         }
     }
+
     @Override
     public Contact getContact(Long contactId) {
         for(Contact contact : contacts) {
@@ -46,10 +53,12 @@ public class ContactSimpleDAO implements ContactDAO {
         }
         return null;
     }
+
     @Override
     public List<Contact> findContacts() {
         return contacts;
     }
+
     private Long generateContactId() {
         Long contactId = Math.round(Math.random() * 1000 + System.currentTimeMillis());
         while(getContact(contactId) != null) {
